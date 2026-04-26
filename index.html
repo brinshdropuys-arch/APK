@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlataPro21 · Tu presupuesto de soltero responsable | Perú 2026</title>
+  <meta name="description"
+    content="PlataPro21: presupuesto 50-30-20 para jóvenes de 21 años con responsabilidades reales en el Perú 2026. Sueldo de S/ 1,000." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0d0f1a;
+      --bg2: #131625;
+      --card: #1a1e30;
+      --card2: #1f2440;
+      --border: #2a2f4a;
+      --accent1: #6c63ff;
+      --accent2: #a78bfa;
+      --needs: #22d3ae;
+      --wants: #f59e0b;
+      --savings: #6c63ff;
+      --danger: #f87171;
+      --ok: #34d399;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse at 10% 0%, rgba(108, 99, 255, 0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 90% 80%, rgba(34, 211, 174, 0.10) 0%, transparent 60%);
+    }
+
+    /* ---- HEADER ---- */
+    header {
+      background: rgba(19, 22, 37, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.35rem;
+      background: linear-gradient(135deg, var(--accent1), var(--needs));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo span {
+      color: var(--muted);
+      font-size: .85rem;
+      font-weight: 400;
+      display: block;
+      margin-top: -2px;
+      -webkit-text-fill-color: var(--muted);
+    }
+
+    .badge {
+      background: linear-gradient(135deg, #6c63ff33, #22d3ae22);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: .3rem .9rem;
+      font-size: .78rem;
+      color: var(--accent2);
+    }
+
+    /* ---- HERO ---- */
+    .hero {
+      text-align: center;
+      padding: 3.5rem 2rem 2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--white) 30%, var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      color: var(--muted);
+      margin-top: .7rem;
+      font-size: .97rem;
+      max-width: 520px;
+      margin-inline: auto;
+    }
+
+    .sueldo-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      background: linear-gradient(135deg, #6c63ff22, #22d3ae22);
+      border: 1px solid #6c63ff55;
+      border-radius: 12px;
+      padding: .5rem 1.4rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent2);
+    }
+
+    /* ---- RING CHART ---- */
+    .ring-section {
+      display: flex;
+      justify-content: center;
+      padding: 1.5rem 2rem 0;
+    }
+
+    .ring-wrap {
+      position: relative;
+      width: 220px;
+      height: 220px;
+    }
+
+    .ring-wrap svg {
+      transform: rotate(-90deg);
+      width: 220px;
+      height: 220px;
+    }
+
+    .ring-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ring-center span:first-child {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--white);
+    }
+
+    .ring-center span:last-child {
+      font-size: .78rem;
+      color: var(--muted);
+    }
+
+    .ring-legend {
+      display: flex;
+      flex-direction: column;
+      gap: .7rem;
+      justify-content: center;
+      padding-left: 2rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+
+    .legend-dot {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .legend-label {
+      font-size: .83rem;
+      color: var(--muted);
+    }
+
+    .legend-val {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-left: auto;
+      padding-left: 1rem;
+    }
+
+    /* ---- RULE BANDS ---- */
+    .bands {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      max-width: 900px;
+      margin: 2rem auto 0;
+      padding: 0 1.5rem;
+    }
+
+    .band {
+      border-radius: 18px;
+      padding: 1.4rem;
+      border: 1px solid var(--border);
+      background: var(--card);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform .2s;
+    }
+
+    .band:hover {
+      transform: translateY(-4px);
+    }
+
+    .band::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: .07;
+    }
+
+    .band.needs::before {
+      background: var(--needs);
+    }
+
+    .band.wants::before {
+      background: var(--wants);
+    }
+
+    .band.savings::before {
+      background: var(--savings);
+    }
+
+    .band-pct {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+    }
+
+    .band.needs .band-pct {
+      color: var(--needs);
+    }
+
+    .band.wants .band-pct {
+      color: var(--wants);
+    }
+
+    .band.savings .band-pct {
+      color: var(--savings);
+    }
+
+    .band-label {
+      font-size: .85rem;
+      color: var(--muted);
+      margin-top: .1rem;
+    }
+
+    .band-soles {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-top: .4rem;
+    }
+
+    .band-desc {
+      font-size: .75rem;
+      color: var(--muted);
+      margin-top: .4rem;
+      line-height: 1.4;
+    }
+
+    /* ---- MAIN GRID ---- */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.4rem;
+      max-width: 980px;
+      margin: 2rem auto 0;
+      padding: 0 1.5rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.5rem;
+      transition: box-shadow .3s;
+    }
+
+    .card:hover {
+      box-shadow: 0 0 30px rgba(108, 99, 255, .08);
+    }
+
+    .card h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .card h2 .icon {
+      font-size: 1.2rem;
+    }
+
+    /* ---- EXPENSE ROW ---- */
+    .expense-row {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .7rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .04);
+    }
+
+    .expense-row:last-child {
+      border-bottom: none;
+    }
+
+    .exp-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .exp-info {
+      flex: 1;
+    }
+
+    .exp-name {
+      font-size: .87rem;
+      font-weight: 600;
+    }
+
+    .exp-cat {
+      font-size: .72rem;
+      color: var(--muted);
+    }
+
+    .exp-amount {
+      font-size: .95rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .exp-bar-wrap {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, .07);
+      border-radius: 99px;
+      margin-top: .3rem;
+      overflow: hidden;
+    }
+
+    .exp-bar {
+      height: 4px;
+      border-radius: 99px;
+      transition: width 1s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .tag-ok {
+      background: rgba(34, 211, 174, .15);
+      color: var(--ok);
+      font-size: .65rem;
+      padding: .15rem .55rem;
+      border-radius: 99px;
+      white-space: nowrap;
+    }
+
+    .tag-warn {
+      background: rgba(245, 158, 11, .15);
+      color: var(--wants);
+      font-size: .65rem;
+      padding: .15rem .55rem;
+      border-radius: 99px;
+      white-space: nowrap;
+    }
+
+    .tag-bad {
+      background: rgba(248, 113, 113, .15);
+      color: var(--danger);
+      font-size: .65rem;
+      padding: .15rem .55rem;
+      border-radius: 99px;
+      white-space: nowrap;
+    }
+
+    /* ---- RECOMMENDATIONS ---- */
+    .rec-card {
+      grid-column: 1 / -1;
+    }
+
+    .rec-list {
+      display: flex;
+      flex-direction: column;
+      gap: .8rem;
+    }
+
+    .rec-item {
+      background: var(--card2);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      border-left: 3px solid var(--accent1);
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .rec-item.green {
+      border-color: var(--ok);
+    }
+
+    .rec-item.yellow {
+      border-color: var(--wants);
+    }
+
+    .rec-item.red {
+      border-color: var(--danger);
+    }
+
+    .rec-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      margin-top: .1rem;
+    }
+
+    .rec-text strong {
+      font-size: .88rem;
+      display: block;
+      color: var(--white);
+      margin-bottom: .25rem;
+    }
+
+    .rec-text p {
+      font-size: .78rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ---- PROGRESS SUMMARY ---- */
+    .summary-card {
+      grid-column: 1 / -1;
+    }
+
+    .progress-row {
+      margin-bottom: 1.1rem;
+    }
+
+    .progress-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: .4rem;
+      font-size: .83rem;
+    }
+
+    .progress-label {
+      font-weight: 600;
+    }
+
+    .progress-vals {
+      color: var(--muted);
+    }
+
+    .progress-track {
+      height: 10px;
+      background: rgba(255, 255, 255, .07);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 10px;
+      border-radius: 99px;
+      transition: width 1.2s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .overflow-flag {
+      font-size: .72rem;
+      margin-top: .3rem;
+      display: none;
+      color: var(--danger);
+    }
+
+    /* ---- TIPS PERU ---- */
+    .tips-card {
+      grid-column: 1 / -1;
+    }
+
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: .9rem;
+    }
+
+    .tip-item {
+      background: var(--card2);
+      border-radius: 12px;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      display: flex;
+      gap: .7rem;
+      align-items: flex-start;
+      transition: border-color .2s;
+    }
+
+    .tip-item:hover {
+      border-color: var(--accent1)55;
+    }
+
+    .tip-emoji {
+      font-size: 1.3rem;
+    }
+
+    .tip-body strong {
+      font-size: .82rem;
+      display: block;
+      color: var(--white);
+    }
+
+    .tip-body p {
+      font-size: .74rem;
+      color: var(--muted);
+      margin-top: .2rem;
+      line-height: 1.45;
+    }
+
+    /* ---- CONTEXT 2026 ---- */
+    .context-card {
+      grid-column: 1 / -1;
+    }
+
+    .context-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+    }
+
+    .ctx-item {
+      background: var(--card2);
+      border-radius: 10px;
+      padding: .85rem 1rem;
+      font-size: .8rem;
+      border: 1px solid var(--border);
+      display: flex;
+      gap: .6rem;
+      align-items: flex-start;
+    }
+
+    .ctx-item .cicon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .ctx-item p {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .ctx-item strong {
+      color: var(--text);
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      text-align: center;
+      padding: 2.5rem 1.5rem 3rem;
+      color: var(--muted);
+      font-size: .77rem;
+    }
+
+    footer a {
+      color: var(--accent2);
+      text-decoration: none;
+    }
+
+    /* ---- TOOLTIP ---- */
+    .tooltip-wrap {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .tooltip-box {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0d0f1a;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .6rem .9rem;
+      font-size: .75rem;
+      color: var(--text);
+      width: 200px;
+      z-index: 50;
+      line-height: 1.5;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
+    }
+
+    .tooltip-wrap:hover .tooltip-box {
+      display: block;
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 680px) {
+      .bands {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+      }
+
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ring-section {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .ring-legend {
+        padding-left: 0;
+        padding-top: 1.5rem;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+      }
+
+      .context-list {
+        grid-template-columns: 1fr;
+      }
+
+      .rec-card,
+      .summary-card,
+      .tips-card,
+      .context-card {
+        grid-column: 1;
+      }
+    }
+
+    /* ---- ANIMATIONS ---- */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero,
+    .bands,
+    .main-grid {
+      animation: fadeUp .6s ease both;
+    }
+
+    .bands {
+      animation-delay: .1s;
+    }
+
+    .main-grid {
+      animation-delay: .2s;
+    }
+
+    .band {
+      animation: fadeUp .5s ease both;
+    }
+
+    .band:nth-child(1) {
+      animation-delay: .15s;
+    }
+
+    .band:nth-child(2) {
+      animation-delay: .25s;
+    }
+
+    .band:nth-child(3) {
+      animation-delay: .35s;
+    }
+
+    /* Pulse on saldo */
+    @keyframes pulse-border {
+
+      0%,
+      100% {
+        border-color: var(--border);
+      }
+
+      50% {
+        border-color: var(--accent1)88;
+      }
+    }
+
+    .saldo-card {
+      animation: pulse-border 3s infinite;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      💸 PlataPro21
+      <span>Soltero, 21 años · Perú 2026</span>
+    </div>
+    <div class="badge">👤 21 años · Lima, Perú</div>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>21 años, soltero<br />y con las cuentas claras 💪</h1>
+    <p>Eres joven pero ya tienes responsabilidades reales: servicios, comida, transporte, ahorro. Esta es tu hoja de ruta financiera adaptada al Perú 2026.</p>
+    <div class="sueldo-tag">💼 Sueldo Neto: S/ 1,000.00 · Hombre · Soltero · Lima</div>
+  </div>
+
+  <!-- RING + LEGEND -->
+  <div class="ring-section" style="gap:2rem; flex-wrap:wrap; margin-top:2rem;">
+    <div class="ring-wrap">
+      <svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" id="ringChart">
+        <circle cx="110" cy="110" r="90" stroke="#1f2440" stroke-width="22" />
+        <!-- Needs 50% -->
+        <circle cx="110" cy="110" r="90" stroke="#22d3ae" stroke-width="22" stroke-dasharray="282.74 565.48"
+          stroke-linecap="round" id="arc-needs" />
+        <!-- Wants 30% -->
+        <circle cx="110" cy="110" r="90" stroke="#f59e0b" stroke-width="22" stroke-dasharray="169.65 565.48"
+          stroke-dashoffset="-282.74" stroke-linecap="round" id="arc-wants" />
+        <!-- Savings 20% -->
+        <circle cx="110" cy="110" r="90" stroke="#6c63ff" stroke-width="22" stroke-dasharray="113.1 565.48"
+          stroke-dashoffset="-452.39" stroke-linecap="round" id="arc-savings" />
+      </svg>
+      <div class="ring-center">
+        <span>S/ 1,000</span>
+        <span>mensual</span>
+      </div>
+    </div>
+    <div class="ring-legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--needs)"></div>
+        <span class="legend-label">Necesidades</span>
+        <span class="legend-val" style="color:var(--needs)">S/ 500</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--wants)"></div>
+        <span class="legend-label">Gustos</span>
+        <span class="legend-val" style="color:var(--wants)">S/ 300</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--savings)"></div>
+        <span class="legend-label">Ahorro / Deuda</span>
+        <span class="legend-val" style="color:var(--savings)">S/ 200</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BANDS -->
+  <div class="bands">
+    <div class="band needs">
+      <div class="band-pct">50%</div>
+      <div class="band-label">🏠 Necesidades básicas</div>
+      <div class="band-soles">S/ 500</div>
+      <div class="band-desc">Alquiler, comida, luz, agua, transporte, internet, salud. Lo que no puedes evitar.</div>
+    </div>
+    <div class="band wants">
+      <div class="band-pct">30%</div>
+      <div class="band-label">🎉 Gustos y entretenimiento</div>
+      <div class="band-soles">S/ 300</div>
+      <div class="band-desc">Salidas, streaming, ropa, celular premium, delivery, ocio. Lo que disfrutas.</div>
+    </div>
+    <div class="band savings">
+      <div class="band-pct">20%</div>
+      <div class="band-label">🏦 Ahorro / inversión / deudas</div>
+      <div class="band-soles">S/ 200</div>
+      <div class="band-desc">Fondo de emergencia, CTS, AFP voluntaria, pagar deudas, metas financieras.</div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- NECESIDADES -->
+    <div class="card">
+      <h2><span class="icon">🏠</span> Necesidades (50% · S/ 500)</h2>
+
+      <div class="expense-row">
+        <div class="exp-icon" style="background:#22d3ae18;">🍽️</div>
+        <div class="exp-info">
+          <div class="exp-name">Alimentación</div>
+          <div class="exp-cat">Mercado, menú diario</div>
+          <div class="exp-bar-wrap">
+            <div class="exp-bar" style="width:40%;background:var(--needs)"></div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div class="exp-amount" style="color:var(--needs)">S/ 200</div>
+          <div class="tag-ok">✓ ok</div>
+        </div>
+      </div>
+
+      <div class="expense-row">
+        <div class="exp-icon" style="background:#22d3ae18;">🌐</div>
+        <div class="exp-info">
+          <div class="exp-name">Internet de casa</div>
+          <div class="exp-cat">Claro / Movistar / WOM</div>
+          <div class="exp-bar-wrap">
+            <div class="exp-bar" style="width:16%;background:var(--needs)"></div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div class="exp-amount" style="color:var(--needs)">S/ 79.90</div>
+          <div class="tag-warn">⚠ fijo</div>
+        </div>
+      </div>
+
+      <div class="expense-row">
+        <div class="exp-icon" style="background:#22d3ae18;">💡</div>
+        <div class="exp-info">
+          <div class="exp-name">Luz + Agua</div>
+          <div class="exp-cat">Enel / Sedapal</div>
+          <div class="exp-bar-wrap">
+            <div class="exp-bar" style="width:17%;background:var(--needs)"></div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div class="exp-amount" style="color:var(--needs)">S/ 85</div>
+          <div class="tag-ok">✓ ok</div>
+        </div>
+      </div>
+
+      <div class="expense-row">
+        <div class="exp-icon" style="background:#22d3ae18;">🚌</div>
+        <div class="exp-info">
+          <div class="exp-name">Transporte</div>
+          <div class="exp-cat">Bus / Metropolitano / combi</div>
+          <div class="exp-bar-wrap">
+            <div class="exp-bar" style="width:20%;background:var(--needs)"></div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div class="exp-amount" style="color:var(--needs)">S/ 100</div>
+          <div class="tag-warn">⚠ ajustado</div>
+        </div>
+      </div>
+
+      <div class="expense-row">
+        <div class="exp-icon" style="background:#22d3ae18;">💊</div>
+        <div class="exp-info">
+          <div class="exp-name">Salud / Farmacia</div>
+          <div class="exp-cat">Inkafarma, farmacias, EsSalud</div>
+          <div class="exp-bar-wrap">
+            <div class="exp-bar" style="width:6%;background:var(--needs)"></div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div class="exp-amount" style="color:var(--needs)">S/ 30</div>
+          <div class="tag-ok">✓ ok</div>
+        </div>
+      </div>
+
+      <div
+        style="margin-top:1rem; padding-top:.8rem; border-top:1px solid rgba(255,255,255,.06); display:flex; justify-content:space-between; font-size:.85rem;">
+        <span style="color:var(--muted)">Total necesidades</span>
+        <strong id="totalNeeds" style="color:var(--needs)">S/ 494.90</strong>
+      </div>
+      <div style="font-size:.72rem; color:var(--wants); text-align:right; margin-top:.2rem;">⚠ Solo S/ 5.10 de margen — ajustado al límite</div>
+    </div>
+
+    <!-- GUSTOS -->
+    <div class="card">
+      <h2><span class="icon">🎉</span> Gustos (30% · S/ 300)</h2>
+
+      <div class="expense-row">
+        <div class="exp-icon" style="background:#f59e0b18;">📱</div>
+        <div class="exp-info">
+          <div class="exp-name">Plan celular</div>
+          <div class="exp-cat">Claro / Entel / Bitel / Movistar</div>
+          <div class="exp-bar-wrap">
+            <div class="exp-bar" style="width:13%;background:var(--wants)"></div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div class="exp-amount" style="color:var(--wants)">S/ 40</div>
+          <div class="tag-ok">✓ ok</div>
+        </div>
+      </div>
+
+      <div class="expense-row">
+        <div class="exp-icon" style="background:#f59e0b18;">🎬</div>
+        <div class="exp-info">
+          <div class="exp-name">Streaming</div>
+          <div class="exp-cat">Netflix / Max / Disney+ / Spotify</div>
+          <div class="exp-bar-wrap">
+            <div class="exp-bar" style="width:15%;background:var(--wants)"></div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div class="exp-amount" style="color:var(--wants)">S/ 45</div>
+          <div class="tag-warn">⚠ revisar</div>
+        </div>
+      </div>
+
+      <div class="expense-row">
+        <div class="exp-icon" style="background:#f59e0b18;">🍕</div>
+        <div class="exp-info">
+          <div class="exp-name">Salidas / Delivery</div>
+          <div class="exp-cat">Rappi, PedidosYa, restaurantes</div>
+          <div class="exp-bar-wrap">
+            <div class="exp-bar" style="width:13%;background:var(--wants)"></div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div class="exp-amount" style="color:var(--wants)">S/ 40</div>
+          <div class="tag-ok">✓ ok</div>
+        </div>
+      </div>
+
+      <div class="expense-row">
+        <div class="exp-icon" style="background:#f59e0b18;">👕</div>
+        <div class="exp-info">
+          <div class="exp-name">Ropa / Calzado</div>
+          <div class="exp-cat">Gamarra, Saga, Ripley</div>
+          <div class="exp-bar-wrap">
+            <div class="exp-bar" style="width:27%;background:var(--wants)"></div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div class="exp-amount" style="color:var(--wants)">S/ 80</div>
+          <div class="tag-ok">✓ ok</div>
+        </div>
+      </div>
+
+      <div class="expense-row">
+        <div class="exp-icon" style="background:#f59e0b18;">🎮</div>
+        <div class="exp-info">
+          <div class="exp-name">Ocio / Entretenimiento</div>
+          <div class="exp-cat">Cine, juegos, salidas sociales</div>
+          <div class="exp-bar-wrap">
+            <div class="exp-bar" style="width:20%;background:var(--wants)"></div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div class="exp-amount" style="color:var(--wants)">S/ 55</div>
+          <div class="tag-ok">✓ ok</div>
+        </div>
+      </div>
+
+      <div
+        style="margin-top:1rem; padding-top:.8rem; border-top:1px solid rgba(255,255,255,.06); display:flex; justify-content:space-between; font-size:.85rem;">
+        <span style="color:var(--muted)">Total gustos</span>
+        <strong style="color:var(--wants)">S/ 260</strong>
+      </div>
+      <div style="font-size:.72rem; color:var(--ok); text-align:right; margin-top:.2rem;">✅ Ahorras saliendo 1 vez/semana — S/ 40 libres para redirigir</div>
+    </div>
+
+    <!-- AHORRO -->
+    <div class="card saldo-card" style="grid-column: 1 / -1;">
+      <h2><span class="icon">🏦</span> Ahorro / Inversión / Deudas (20% · S/ 200)</h2>
+      <div
+        style="display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:1rem; margin-top:.5rem;">
+        <div style="background:var(--card2); border-radius:12px; padding:1rem; border:1px solid var(--border);">
+          <div style="font-size:1.6rem;">🛡️</div>
+          <div style="font-size:.82rem; color:var(--muted); margin-top:.4rem;">Fondo de emergencia</div>
+          <div style="font-size:1.2rem; font-weight:700; color:var(--savings); margin-top:.2rem;">S/ 100</div>
+          <div style="font-size:.7rem; color:var(--muted); margin-top:.2rem;">Meta: S/ 3,000 (3 meses)</div>
+        </div>
+        <div style="background:var(--card2); border-radius:12px; padding:1rem; border:1px solid var(--border);">
+          <div style="font-size:1.6rem;">📈</div>
+          <div style="font-size:.82rem; color:var(--muted); margin-top:.4rem;">AFP / Inversión</div>
+          <div style="font-size:1.2rem; font-weight:700; color:var(--savings); margin-top:.2rem;">S/ 60</div>
+          <div style="font-size:.7rem; color:var(--muted); margin-top:.2rem;">AFP voluntaria o Fondos</div>
+        </div>
+        <div style="background:var(--card2); border-radius:12px; padding:1rem; border:1px solid var(--border);">
+          <div style="font-size:1.6rem;">💳</div>
+          <div style="font-size:.82rem; color:var(--muted); margin-top:.4rem;">Pago deudas / cuotas</div>
+          <div style="font-size:1.2rem; font-weight:700; color:var(--savings); margin-top:.2rem;">S/ 40</div>
+          <div style="font-size:.7rem; color:var(--muted); margin-top:.2rem;">Tarjeta, préstamo personal</div>
+        </div>
+      </div>
+      <div
+        style="margin-top:1rem; font-size:.78rem; background:rgba(108,99,255,.1); border:1px solid rgba(108,99,255,.3); border-radius:10px; padding:.75rem 1rem; color:var(--accent2);">
+        💡 <strong>Consejo:</strong> Abre una cuenta de ahorros separada en Interbank, BCP o Yape con rendimiento (Yape
+        Pro paga hasta 7% anual). Haz transferencia automática el día que cobras.
+      </div>
+    </div>
+
+    <!-- GRAFICO GASTOS FIJOS -->
+    <div class="card" style="grid-column: 1 / -1;">
+      <h2><span class="icon">📌</span> Gastos Fijos Mensuales — Lo que sale sí o sí</h2>
+      <div style="display:grid; grid-template-columns: 1fr auto; gap:.5rem; align-items:center; margin-bottom:1rem;">
+        <div style="font-size:.82rem; color:var(--muted);">Estos 4 gastos representan <strong style="color:var(--white);">S/ 419.90</strong> de tu sueldo — el <strong style="color:#f87171;">42%</strong> fijo cada mes.</div>
+        <div style="background:rgba(248,113,113,.12); border:1px solid rgba(248,113,113,.3); border-radius:10px; padding:.4rem .9rem; text-align:center;">
+          <div style="font-size:.68rem; color:var(--muted);">Comprometido fijo</div>
+          <div style="font-size:1.15rem; font-weight:800; color:#f87171;">S/ 419.90</div>
+        </div>
+      </div>
+
+      <!-- Barra apilada visual -->
+      <div style="margin-bottom:1.2rem;">
+        <div style="font-size:.75rem; color:var(--muted); margin-bottom:.5rem;">Distribución sobre S/ 1,000</div>
+        <div style="display:flex; height:28px; border-radius:10px; overflow:hidden; gap:2px;">
+          <div id="bar-comida" style="width:0%; background:linear-gradient(135deg,#22d3ae,#16a085); border-radius:8px 0 0 8px; display:flex; align-items:center; justify-content:center; font-size:.65rem; font-weight:700; color:#0d2520; transition:width 1.2s cubic-bezier(.4,0,.2,1); overflow:hidden; white-space:nowrap; padding:0 4px;">🍽️ 20%</div>
+          <div id="bar-internet" style="width:0%; background:linear-gradient(135deg,#3b82f6,#1d4ed8); display:flex; align-items:center; justify-content:center; font-size:.65rem; font-weight:700; color:#dbeafe; transition:width 1.2s .1s cubic-bezier(.4,0,.2,1); overflow:hidden; white-space:nowrap; padding:0 4px;">🌐 8%</div>
+          <div id="bar-movil" style="width:0%; background:linear-gradient(135deg,#a855f7,#7c3aed); display:flex; align-items:center; justify-content:center; font-size:.65rem; font-weight:700; color:#f3e8ff; transition:width 1.2s .2s cubic-bezier(.4,0,.2,1); overflow:hidden; white-space:nowrap; padding:0 4px;">📱 4%</div>
+          <div id="bar-pasajes" style="width:0%; background:linear-gradient(135deg,#f59e0b,#b45309); display:flex; align-items:center; justify-content:center; font-size:.65rem; font-weight:700; color:#1c1208; transition:width 1.2s .3s cubic-bezier(.4,0,.2,1); overflow:hidden; white-space:nowrap; padding:0 4px;">🚌 10%</div>
+          <div style="flex:1; background:rgba(255,255,255,.06); border-radius:0 8px 8px 0; display:flex; align-items:center; justify-content:center; font-size:.65rem; color:var(--muted);">Resto S/ 580.10</div>
+        </div>
+        <div style="display:flex; gap:1rem; margin-top:.7rem; flex-wrap:wrap;">
+          <div style="display:flex; align-items:center; gap:.4rem; font-size:.73rem;"><span style="width:10px;height:10px;border-radius:3px;background:linear-gradient(135deg,#22d3ae,#16a085);display:inline-block;"></span><span style="color:var(--muted);">Comida <strong style="color:var(--white);">S/ 200</strong></span></div>
+          <div style="display:flex; align-items:center; gap:.4rem; font-size:.73rem;"><span style="width:10px;height:10px;border-radius:3px;background:linear-gradient(135deg,#3b82f6,#1d4ed8);display:inline-block;"></span><span style="color:var(--muted);">Internet <strong style="color:var(--white);">S/ 79.90</strong></span></div>
+          <div style="display:flex; align-items:center; gap:.4rem; font-size:.73rem;"><span style="width:10px;height:10px;border-radius:3px;background:linear-gradient(135deg,#a855f7,#7c3aed);display:inline-block;"></span><span style="color:var(--muted);">Plan móvil <strong style="color:var(--white);">S/ 40</strong></span></div>
+          <div style="display:flex; align-items:center; gap:.4rem; font-size:.73rem;"><span style="width:10px;height:10px;border-radius:3px;background:linear-gradient(135deg,#f59e0b,#b45309);display:inline-block;"></span><span style="color:var(--muted);">Pasajes <strong style="color:var(--white);">S/ 100</strong></span></div>
+        </div>
+      </div>
+
+      <!-- Cards detalle por fijo -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(175px,1fr)); gap:.85rem;">
+        <div style="background:var(--card2); border-radius:12px; padding:1rem; border:1px solid #22d3ae33;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <div>
+              <div style="font-size:1.3rem;">🍽️</div>
+              <div style="font-size:.8rem; font-weight:700; margin-top:.3rem;">Comida</div>
+              <div style="font-size:.68rem; color:var(--muted);">Mercado + menú diario</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:1.1rem; font-weight:800; color:#22d3ae;">S/ 200</div>
+              <div style="font-size:.63rem; color:var(--muted);">20% del sueldo</div>
+            </div>
+          </div>
+          <div style="margin-top:.7rem; height:4px; background:rgba(255,255,255,.07); border-radius:99px; overflow:hidden;">
+            <div style="height:4px; width:20%; background:#22d3ae; border-radius:99px;"></div>
+          </div>
+        </div>
+        <div style="background:var(--card2); border-radius:12px; padding:1rem; border:1px solid #3b82f633;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <div>
+              <div style="font-size:1.3rem;">🌐</div>
+              <div style="font-size:.8rem; font-weight:700; margin-top:.3rem;">Internet Hogar</div>
+              <div style="font-size:.68rem; color:var(--muted);">Fibra óptica casa</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:1.1rem; font-weight:800; color:#3b82f6;">S/ 79.90</div>
+              <div style="font-size:.63rem; color:var(--muted);">8% del sueldo</div>
+            </div>
+          </div>
+          <div style="margin-top:.7rem; height:4px; background:rgba(255,255,255,.07); border-radius:99px; overflow:hidden;">
+            <div style="height:4px; width:8%; background:#3b82f6; border-radius:99px;"></div>
+          </div>
+        </div>
+        <div style="background:var(--card2); border-radius:12px; padding:1rem; border:1px solid #a855f733;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <div>
+              <div style="font-size:1.3rem;">📱</div>
+              <div style="font-size:.8rem; font-weight:700; margin-top:.3rem;">Plan Móvil</div>
+              <div style="font-size:.68rem; color:var(--muted);">Bitel / Entel / Claro</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:1.1rem; font-weight:800; color:#a855f7;">S/ 40</div>
+              <div style="font-size:.63rem; color:var(--muted);">4% del sueldo</div>
+            </div>
+          </div>
+          <div style="margin-top:.7rem; height:4px; background:rgba(255,255,255,.07); border-radius:99px; overflow:hidden;">
+            <div style="height:4px; width:4%; background:#a855f7; border-radius:99px;"></div>
+          </div>
+        </div>
+        <div style="background:var(--card2); border-radius:12px; padding:1rem; border:1px solid #f59e0b33;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <div>
+              <div style="font-size:1.3rem;">🚌</div>
+              <div style="font-size:.8rem; font-weight:700; margin-top:.3rem;">Pasajes</div>
+              <div style="font-size:.68rem; color:var(--muted);">Bus / Metro / Combi</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:1.1rem; font-weight:800; color:#f59e0b;">S/ 100</div>
+              <div style="font-size:.63rem; color:var(--muted);">10% del sueldo</div>
+            </div>
+          </div>
+          <div style="margin-top:.7rem; height:4px; background:rgba(255,255,255,.07); border-radius:99px; overflow:hidden;">
+            <div style="height:4px; width:10%; background:#f59e0b; border-radius:99px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:1rem; background:rgba(248,113,113,.07); border:1px solid rgba(248,113,113,.2); border-radius:10px; padding:.8rem 1rem; font-size:.78rem; color:var(--muted);">
+        ⚡ <strong style="color:#f87171;">Clave:</strong> Con S/ 419.90 fijos, tu dinero "libre" real es solo <strong style="color:var(--white);">S/ 580.10</strong> de los cuales aún debes cubrir luz, agua, salud, ropa y ahorro. La disciplina en los variables es lo que te da espacio.
+      </div>
+    </div>
+
+    <!-- BARRA RESUMEN -->
+    <div class="card summary-card">
+      <h2><span class="icon">📊</span> Resumen de uso por categoría</h2>
+      <div class="progress-row">
+        <div class="progress-header">
+          <span class="progress-label" style="color:var(--needs)">🏠 Necesidades</span>
+          <span class="progress-vals">S/ 494.90 / S/ 500</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" style="width:99%; background: linear-gradient(90deg, var(--needs), #22d3ae99);">
+          </div>
+        </div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-header">
+          <span class="progress-label" style="color:var(--wants)">🎉 Gustos</span>
+          <span class="progress-vals">S/ 260 / S/ 300</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" style="width:86%; background: linear-gradient(90deg, var(--wants), #f59e0b99);">
+          </div>
+        </div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-header">
+          <span class="progress-label" style="color:var(--savings)">🏦 Ahorro</span>
+          <span class="progress-vals">S/ 200 / S/ 200</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" style="width:100%; background: linear-gradient(90deg, var(--savings), #a78bfa99);">
+          </div>
+        </div>
+      </div>
+      <div
+        style="margin-top:1.2rem; padding:1rem; background:rgba(34,211,174,.07); border-radius:10px; border:1px solid rgba(34,211,174,.2);">
+        <div style="display:flex; justify-content:space-between; font-size:.88rem;">
+          <span style="color:var(--muted)">Total gastado</span>
+          <strong style="color:var(--white)">S/ 954.90</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:.88rem; margin-top:.4rem;">
+          <span style="color:var(--muted)">Remanente libre</span>
+          <strong style="color:var(--ok)">+ S/ 45.10</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECOMENDACIONES -->
+    <div class="card rec-card">
+      <h2><span class="icon">💡</span> Recomendaciones personalizadas · Perú 2026</h2>
+      <div class="rec-list">
+
+        <div class="rec-item green">
+          <div class="rec-icon">✅</div>
+          <div class="rec-text">
+            <strong>Internet hogar (S/ 79.90) — Gasto fijo, busca rebaja</strong>
+            <p>Es un gasto inevitable pero negociable. Llama al área de retención de tu operadora (Movistar/Claro) y menciona que estás evaluando cambiarte: suelen ofrecer descuentos de S/ 10–20 por 6 meses. WOM tiene fibra desde S/ 59.90. Si logras bajar a S/ 59.90, liberas S/ 20 extra al mes = S/ 240 al año.</p>
+          </div>
+        </div>
+
+        <div class="rec-item green">
+          <div class="rec-icon">✅</div>
+          <div class="rec-text">
+            <strong>Celular (S/ 40) — Excelente elección</strong>
+            <p>40 soles para plan de datos es muy eficiente. Bitel y Entel tienen planes desde S/ 35–50 con 40 GB +
+              llamadas ilimitadas. Evita pasarte a planes postpago caros (S/ 80+), no lo necesitas con S/ 1,000 de
+              sueldo.</p>
+          </div>
+        </div>
+
+        <div class="rec-item green">
+          <div class="rec-icon">✅</div>
+          <div class="rec-text">
+            <strong>Alimentación (S/ 200) — Ajustado pero viable</strong>
+            <p>200 soles para comida cubre bien si cocinas en casa. Un menú de barrio cuesta S/ 8–12 en Lima 2026. Tip:
+              haz mercado en Wong o Metro los jueves (descuentos de temporada) y usa la app de Vivanda/Metro para
+              cupones. Evita el delivery frecuente: un combo puede costarte S/ 25–35 incluyendo delivery y propina.</p>
+          </div>
+        </div>
+
+        <div class="rec-item yellow">
+          <div class="rec-icon">⚠️</div>
+          <div class="rec-text">
+            <strong>Streaming (S/ 45) — Revisar suscripciones</strong>
+            <p>En 2026 los servicios de streaming subieron de precio. Netflix básico ya va por S/ 34.90, Spotify S/
+              18.90. Evalúa cuáles realmente usas. Tip: comparte cuentas con familiares (donde es legal) o usa el plan
+              familiar para dividir el costo.</p>
+          </div>
+        </div>
+
+        <div class="rec-item green">
+          <div class="rec-icon">✅</div>
+          <div class="rec-text">
+            <strong>Salidas (S/ 40) — ¡Hábito excelente! Salir 1 vez/semana</strong>
+            <p>Con solo ~S/ 10 por salida semanal estás muy por debajo del límite. Eso te libera S/ 40 extra en esta categoría. Redirige ese dinero al fondo de emergencia: así llegarías a los S/ 3,000 en ~21 meses en vez de 30. Si alguna semana gastas un poco más (cine + cena), igual estarás dentro del margen de S/ 300.</p>
+          </div>
+        </div>
+
+        <div class="rec-item green">
+          <div class="rec-icon">🏦</div>
+          <div class="rec-text">
+            <strong>Fondo de emergencia — Prioridad máxima</strong>
+            <p>Con S/ 100 al mes tardas 30 meses en juntar S/ 3,000. Pero si rediriges los S/ 40 libres de gustos, aportas S/ 140/mes y llegas en ~21 meses. Abre una cuenta Yape Pro (7% anual) o BCP Cuenta Plazo Fijo desde S/ 500 (rendimiento ~6.5%). En 2026 con inflación 2.8%, el dinero bajo el colchón pierde valor real.</p>
+          </div>
+        </div>
+
+        <div class="rec-item green">
+          <div class="rec-icon">📈</div>
+          <div class="rec-text">
+            <strong>Inversión accesible para S/ 1,000 de sueldo en Perú</strong>
+            <p>Con S/ 60 al mes puedes: a) Fondos mutuos en Sura o Scotia (desde S/ 50), b) AFP voluntaria sin fin
+              previsional (retiras cuando quieras), c) Raisin Perú o plataformas de renta fija. Evita criptomonedas con
+              montos pequeños, la volatilidad puede borrar tu progreso.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CONTEXTO PERU 2026 -->
+    <div class="card context-card">
+      <h2><span class="icon">🇵🇪</span> Contexto económico Perú · Abril 2026</h2>
+      <div class="context-list">
+        <div class="ctx-item">
+          <span class="cicon">📊</span>
+          <div>
+            <strong>Inflación: ~2.8% anual</strong>
+            <p>Los alimentos y servicios básicos subieron. El pollo sube a S/ 8–10/kg, el pan y gas también. Adapta tu
+              presupuesto de mercado cada 3 meses.</p>
+          </div>
+        </div>
+        <div class="ctx-item">
+          <span class="cicon">⛽</span>
+          <div>
+            <strong>Transporte encareció</strong>
+            <p>El combustible sigue alto. El Metropolitano y Metro de Lima son las opciones más económicas. Evita taxis
+              frecuentes (InDrive/Uber suma rápido).</p>
+          </div>
+        </div>
+        <div class="ctx-item">
+          <span class="cicon">🏠</span>
+          <div>
+            <strong>Alquiler en Lima: S/ 400–700 cuarto</strong>
+            <p>Si alquilas, tu presupuesto se ajusta mucho. Con S/ 1,000 y alquiler, considera compartir habitación o
+              vivir con familia para liberar más hacia el ahorro.</p>
+          </div>
+        </div>
+        <div class="ctx-item">
+          <span class="cicon">🏥</span>
+          <div>
+            <strong>EsSalud + SIS disponibles</strong>
+            <p>Si eres dependiente, tu empleador aporta 9% a EsSalud. Aprovecha las consultas gratuitas. Para
+              independientes, considera el SIS contributivo (S/ 15–20/mes).</p>
+          </div>
+        </div>
+        <div class="ctx-item">
+          <span class="cicon">💰</span>
+          <div>
+            <strong>CTS desbloqueada hasta 2026</strong>
+            <p>El gobierno mantiene el retiro libre de CTS hasta dic. 2026. Si tienes CTS, considera un retiro
+              estratégico para pagar deudas caras o crear fondo de emergencia.</p>
+          </div>
+        </div>
+        <div class="ctx-item">
+          <span class="cicon">🛒</span>
+          <div>
+            <strong>Compras inteligentes</strong>
+            <p>Usa MercadoLibre para electrónicos, Gamarra para ropa, Metro/Wong para mercado. Evita compras en cuotas
+              con intereses en tarjetas de tiendas (CMR, Oh!, Ripley).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIPS PERU -->
+    <div class="card tips-card">
+      <h2><span class="icon">🚀</span> Tips para el soltero de 21 con cabeza · Perú 2026</h2>
+      <div class="tips-grid">
+        <div class="tip-item">
+          <div class="tip-emoji">📱</div>
+          <div class="tip-body">
+            <strong>Yape / Plin sin comisión</strong>
+            <p>Usa Yape o Plin para pagos y transferencias, evita el cobro de S/ 3.50 por retiro en cajero no-BCP.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-emoji">🛍️</div>
+          <div class="tip-body">
+            <strong>Cashback con tarjetas</strong>
+            <p>La tarjeta Oh! y BBVA tienen cashback hasta 5% en supermercados. Úsalas y paga al contado el mismo mes.
+            </p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-emoji">🥗</div>
+          <div class="tip-body">
+            <strong>Cocina en casa</strong>
+            <p>Cocinar 4 veces por semana puede ahorrarte S/ 60–80 respecto a comer fuera. Menú del día en casa: S/ 5–8.
+            </p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-emoji">📚</div>
+          <div class="tip-body">
+            <strong>Capacítate y sube tu sueldo</strong>
+            <p>A los 21 tu mayor activo es el tiempo. Coursera, Google Career Certificates o Udemy (S/ 20 en oferta). Una nueva habilidad puede darte un aumento de S/ 200–400 al año.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-emoji">🎟️</div>
+          <div class="tip-body">
+            <strong>Cine a precio accesible</strong>
+            <p>Cinemark y Cineplanet tienen funciones desde S/ 10 los martes/miércoles. Evita palomitas a precio de cine
+              (S/ 20+).</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-emoji">🏋️</div>
+          <div class="tip-body">
+            <strong>Gym económico o gratis</strong>
+            <p>SmartFit desde S/ 99/mes, pero parques metropolitanos tienen aparatos gratis. YouTube tiene rutinas
+              completas sin costo.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-emoji">💡</div>
+          <div class="tip-body">
+            <strong>Reduce factura de luz</strong>
+            <p>Desconecta aparatos en stand-by, usa focos LED, haz ropa lavada de noche (tarifa reducida Enel). Puedes
+              ahorrar S/ 15–25 al mes.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-emoji">💳</div>
+          <div class="tip-body">
+            <strong>Empieza a construir historial crediticio</strong>
+            <p>Con 21 años puedes abrir tu primera tarjeta de crédito básica (BCP, Interbank). Úsala para 1 compra al mes y paga SIEMPRE antes del cierre. Sin deuda ni intereses, solo historial.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-emoji">🤝</div>
+          <div class="tip-body">
+            <strong>Juntas / Panderos</strong>
+            <p>Junta de S/ 100 con 3–4 amigos de confianza = S/ 300–400 de golpe sin intereses. Ideal para comprar algo puntual o reforzar el fondo de emergencia.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main-grid -->
+
+  <!-- FOOTER -->
+  <footer>
+    <p>💸 PlataPro21 · Presupuesto 50-30-20 para solteros jóvenes con responsabilidades · Perú 2026</p>
+    <p style="margin-top:.4rem;">Diseñado para hombres de 21 años en Lima Metropolitana. Valores referenciales · Ajusta según tu distrito y situación real.</p>
+    <p style="margin-top:.5rem; font-size:.7rem; opacity:.6;">Fuentes: INEI, BCRP, INDECOPI, SBS Perú · Hecho para que a los 25 ya tengas una base sólida.</p>
+  </footer>
+
+  <script>
+    // Animate progress bars on load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Trigger bar animations after a brief delay
+      setTimeout(() => {
+        document.querySelectorAll('.exp-bar').forEach(bar => {
+          const w = bar.style.width;
+          bar.style.width = '0%';
+          setTimeout(() => { bar.style.width = w; }, 50);
+        });
+        document.querySelectorAll('.progress-fill').forEach(fill => {
+          const w = fill.style.width;
+          fill.style.width = '0%';
+          setTimeout(() => { fill.style.width = w; }, 50);
+        });
+      }, 200);
+
+      // Stacked bar for fixed expenses
+      setTimeout(() => {
+        const barComida   = document.getElementById('bar-comida');
+        const barInternet = document.getElementById('bar-internet');
+        const barMovil    = document.getElementById('bar-movil');
+        const barPasajes  = document.getElementById('bar-pasajes');
+        if (barComida)   barComida.style.width   = '20%';
+        if (barInternet) barInternet.style.width = '7.99%';
+        if (barMovil)    barMovil.style.width    = '4%';
+        if (barPasajes)  barPasajes.style.width  = '10%';
+      }, 350);
+
+      // Ring chart animation
+      const arcs = document.querySelectorAll('#ringChart circle:not(:first-child)');
+      arcs.forEach(arc => {
+        const orig = arc.getAttribute('stroke-dasharray');
+        const [fill, total] = orig.split(' ').map(Number);
+        arc.setAttribute('stroke-dasharray', `0 ${total}`);
+        setTimeout(() => {
+          arc.style.transition = 'stroke-dasharray 1.2s cubic-bezier(.4,0,.2,1)';
+          arc.setAttribute('stroke-dasharray', `${fill} ${total}`);
+        }, 400);
+      });
+
+      // Dynamic date
+      const now = new Date();
+      const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+      console.log(`PlataPro21 cargado · ${months[now.getMonth()]} ${now.getFullYear()} · Soltero, 21 años, Lima`);
+    });
+  </script>
+</body>
+
+</html>
